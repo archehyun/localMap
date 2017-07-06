@@ -192,8 +192,6 @@ public class LocalMap extends Component implements Runnable{
 		
 		centerLocation.update(this);
 		
-		System.out.println("center:"+centerLocation.getLocationX()+","+ centerLocation.getLocationY());
-		
 		locationX = mousePoint.x-centerX ;
 		
 		locationY = -mousePoint.y+centerY ;

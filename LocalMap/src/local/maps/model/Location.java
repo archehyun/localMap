@@ -6,7 +6,7 @@ import java.awt.Point;
 
 import local.maps.LocalMap;
 
-public class Location implements IFLocation{
+public class Location extends Point implements IFLocation{
 	
 	/**
 	 * 
@@ -30,25 +30,11 @@ public class Location implements IFLocation{
 	}
 
 	private double locationY;
-	
-	private int x,y;
-	public int getX() {
-		return x;
-	}
-
-	public void setX(int x) {
-		this.x = x;
-	}
-
-	public int getY() {
-		return y;
-	}
-
-	public void setY(int y) {
-		this.y = y;
-	}
 
 	private int locationXOnMap;
+	
+	private int locationYOnMap;
+	
 	public int getLocationXOnMap() {
 		return locationXOnMap;
 	}
@@ -56,16 +42,17 @@ public class Location implements IFLocation{
 	public void setLocationYOnMap(int locationYOnMap) {
 		this.locationYOnMap = locationYOnMap;
 	}
-
-	private int locationYOnMap;
 	
 	private int width =5;
+	
 	private int heidth =5;
 	
 	public Location(int x, int y) {
 		
 		this.x=x;		
-		this.y =y;
+		this.y=y;
+		this.locationX =x;
+		this.locationY=y;
 		
 		
 	}
