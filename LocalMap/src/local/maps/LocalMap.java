@@ -59,9 +59,9 @@ public class LocalMap extends Component implements Runnable{
 
 	private	int hGap;
 	
-	private	int wGapCount=20;
+	private	int wGapCount=180;
 
-	private	int hGapCount=20;
+	private	int hGapCount=90;
 
 	private static final Color gridColor = Color.lightGray;
 
@@ -148,7 +148,7 @@ public class LocalMap extends Component implements Runnable{
 		
 		g.setColor(gridColor);
 		
-		wGap = (w/2-insect.x)/(wGapCount);
+		wGap = ((w/2-insect.x)/(wGapCount));
 		
 		hGap = (h/2-insect.y)/(hGapCount);	
 
@@ -171,17 +171,26 @@ public class LocalMap extends Component implements Runnable{
 			g.drawLine(insect.x, centerY-i*hGap, w-insect.x, centerY-i*hGap);
 		}
 		
+				
+		
+		g.setColor(Color.red);
 
+		g.drawLine(centerX, insect.y, centerX, h-insect.y);
+
+		g.drawLine(insect.x, centerY, w-insect.x, centerY);
+		
+		//센터 그리드	
+		
+		
 		int centerW = (int) (centerX+centerLocation.getX()*this.getWRate());
 
-		int centerH = (int) (centerY+centerLocation.getY()*this.getHRate());
+		int centerH = (int) (centerY-centerLocation.getY()*this.getHRate());		
 		
 		g.setColor(Color.black);
 
 		g.drawLine(centerW, insect.y, centerW, h-insect.y);
 
 		g.drawLine(insect.x, centerH, w-insect.x, centerH);
-
 
 	}
 	private void update()
@@ -241,6 +250,10 @@ public class LocalMap extends Component implements Runnable{
 	public Location getcenterLocation() {
 		// TODO Auto-generated method stub
 		return centerLocation;
+	}
+	public List<IFLocation> getLocatonList() {
+		// TODO Auto-generated method stub
+		return locationList;
 	}
 
 

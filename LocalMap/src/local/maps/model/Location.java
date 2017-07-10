@@ -12,7 +12,21 @@ public class Location extends Point implements IFLocation{
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	
 	private double locationX;
+	
+	private double locationY;
+	
+	private String locationName;
+	
+	public String getLocationName() {
+		return locationName;
+	}
+
+	public void setLocationName(String locationName) {
+		this.locationName = locationName;
+	}
+
 	public double getLocationX() {
 		return locationX;
 	}
@@ -29,7 +43,7 @@ public class Location extends Point implements IFLocation{
 		this.locationY = locationY;
 	}
 
-	private double locationY;
+	
 
 	private int locationXOnMap;
 	
@@ -69,9 +83,9 @@ public class Location extends Point implements IFLocation{
 		
 		Location centerLocation =map.getcenterLocation();
 		
-		locationXOnMap = (int) (locationX*map.getWRate()+centerLocation.getLocationX()+map.getCenterX()) ;
+		locationXOnMap = (int) ((map.getCenterX()+(centerLocation.getLocationX()+locationX))*map.getWRate()) ;
 		
-		locationYOnMap = (int) (-locationY*map.getWRate()+centerLocation.getLocationX()+map.getCenterY()) ;
+		locationYOnMap = (int) ((map.getCenterY()-(centerLocation.getLocationY()+locationY)*map.getHRate())) ;
 		
 	}
 
