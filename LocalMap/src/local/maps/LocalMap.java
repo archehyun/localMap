@@ -10,7 +10,6 @@ import java.util.LinkedList;
 import java.util.List;
 
 import local.maps.model.IFLocation;
-import local.maps.model.LatLng;
 import local.maps.model.Location;
 import local.maps.model.Marker;
 
@@ -28,8 +27,12 @@ public class LocalMap extends Component implements Runnable{
 		new Thread(this).start();
 	}
 	
-	private double rate=1.0;
+	private double rate=2.0;
 
+
+	public double getRate() {
+		return rate;
+	}
 
 	Point mousePoint = new Point();
 
@@ -39,7 +42,7 @@ public class LocalMap extends Component implements Runnable{
 
 	Point insect = new Point(10, 10);
 
-	private int centerX;
+	private int centerX; //화면 가운데 x
 
 	public int getCenterX() {
 		return centerX;
@@ -49,11 +52,11 @@ public class LocalMap extends Component implements Runnable{
 	}
 
 
-	private int centerY;
+	private int centerY; //화면 가운데 Y
 	
-	private int locationX;
+	private double mouseLocationX;
 	
-	private int locationY;
+	private double mouseLocationY;
 
 	private	int wGap;
 
@@ -73,7 +76,6 @@ public class LocalMap extends Component implements Runnable{
 	
 	List<IFLocation> locationList = new LinkedList<IFLocation>();
 
-	private LatLng centerLatLng;
 	
 	private Location centerLocation;
 	
@@ -81,10 +83,6 @@ public class LocalMap extends Component implements Runnable{
 
 	private static final long serialVersionUID = 1L;
 
-	public void setCenterLatLng(LatLng centerLatLng)
-	{
-		this.centerLatLng = centerLatLng;
-	}
 	public void addMarker(Marker marker)
 	{
 		locationList.add(marker);
@@ -104,7 +102,7 @@ public class LocalMap extends Component implements Runnable{
 		
 		drawMarker(g);		
 
-		g.drawString(locationX+","+locationY, this.getWidth()-50, this.getHeight()-50);
+		g.drawString(String.format("%3.6f", mouseLocationX)+",  "+String.format("%3.6f", mouseLocationY), this.getWidth()-200, this.getHeight()-50);
 	}
 	private void drawLocation(Graphics g) {
 		
@@ -147,10 +145,6 @@ public class LocalMap extends Component implements Runnable{
 		g.drawRect(insect.x, insect.y, w-insect.x*2, h-insect.y*2);
 		
 		g.setColor(gridColor);
-		
-		wGap = ((w/2-insect.x)/(wGapCount));
-		
-		hGap = (h/2-insect.y)/(hGapCount);	
 
 
 		for(int i=1;i<=wGapCount;i++)
@@ -169,9 +163,7 @@ public class LocalMap extends Component implements Runnable{
 		for(int i=1;i<=hGapCount;i++)
 		{
 			g.drawLine(insect.x, centerY-i*hGap, w-insect.x, centerY-i*hGap);
-		}
-		
-				
+		}	
 		
 		g.setColor(Color.red);
 
@@ -195,15 +187,23 @@ public class LocalMap extends Component implements Runnable{
 	}
 	private void update()
 	{
+		int w = this.getSize().width;
+
+		int h = this.getSize().height;
+		
 		centerX = this.getWidth()/2;
 		
 		centerY = this.getHeight()/2;
 		
+		wGap = (int) (((w/2-insect.x)/(wGapCount))/this.rate);
+		
+		hGap = (int) ((h/2-insect.y)/(hGapCount)/this.rate);
+		
+		mouseLocationX = (mousePoint.x-centerX)/this.getWRate()-centerLocation.getLocationX() ;
+		
+		mouseLocationY = -(mousePoint.y-centerY)/this.getHRate()-centerLocation.getLocationY() ;
+		
 		centerLocation.update(this);
-		
-		locationX = mousePoint.x-centerX ;
-		
-		locationY = -mousePoint.y+centerY ;
 		
 		Iterator<IFLocation> iter = locationList.iterator();
 		

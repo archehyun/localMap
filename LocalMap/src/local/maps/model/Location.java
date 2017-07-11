@@ -83,9 +83,9 @@ public class Location extends Point implements IFLocation{
 		
 		Location centerLocation =map.getcenterLocation();
 		
-		locationXOnMap = (int) ((map.getCenterX()+(centerLocation.getLocationX()+locationX))*map.getWRate()) ;
+		locationXOnMap = (int) ((map.getCenterX()+(centerLocation.getLocationX()+locationX))/map.getRate()) ;
 		
-		locationYOnMap = (int) ((map.getCenterY()-(centerLocation.getLocationY()+locationY)*map.getHRate())) ;
+		locationYOnMap = (int) ((map.getCenterY()-(centerLocation.getLocationY()+locationY)/map.getRate())) ;
 		
 	}
 
