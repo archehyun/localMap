@@ -1,6 +1,7 @@
 package local.maps.model;
 
 import java.awt.Graphics;
+import java.awt.Point;
 
 import local.maps.LocalMap;
 
@@ -69,6 +70,18 @@ public class Marker implements IFLocation{
 	public void update(LocalMap map) {
 		
 		
+	}
+
+	@Override
+	public void setLabelView(boolean isLabelView) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public boolean isEnter(Point mousePoint) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

@@ -13,6 +13,16 @@ public class Location extends Point implements IFLocation{
 	 */
 	private static final long serialVersionUID = 1L;
 	
+	boolean isLabelView=false;
+	
+	public boolean isLabelView() {
+		return isLabelView;
+	}
+
+	public void setLabelView(boolean isLabelView) {
+		this.isLabelView = isLabelView;
+	}
+
 	private double locationX;
 	
 	private double locationY;
@@ -43,18 +53,16 @@ public class Location extends Point implements IFLocation{
 		this.locationY = locationY;
 	}
 
+	private int XOnMap;
 	
-
-	private int locationXOnMap;
-	
-	private int locationYOnMap;
+	private int YOnMap;
 	
 	public int getLocationXOnMap() {
-		return locationXOnMap;
+		return XOnMap;
 	}
 
 	public void setLocationYOnMap(int locationYOnMap) {
-		this.locationYOnMap = locationYOnMap;
+		this.YOnMap = locationYOnMap;
 	}
 	
 	private int width =5;
@@ -66,8 +74,7 @@ public class Location extends Point implements IFLocation{
 		this.x=x;		
 		this.y=y;
 		this.locationX =x;
-		this.locationY=y;
-		
+		this.locationY=y;		
 		
 	}
 	
@@ -81,27 +88,44 @@ public class Location extends Point implements IFLocation{
 	@Override
 	public void update(LocalMap map) {
 		
-		Location centerLocation =map.getcenterLocation();
+		XOnMap = map.getXOnMap(this.getLocationX());
 		
-		locationXOnMap = (int) ((map.getCenterX()+(centerLocation.getLocationX()+locationX))/map.getRate()) ;
+		YOnMap = map.getYOnMap(this.getLocationY());
 		
-		locationYOnMap = (int) ((map.getCenterY()-(centerLocation.getLocationY()+locationY)/map.getRate())) ;
+		//System.out.println(XOnMap+","+YOnMap);
 		
 	}
 
 	public int getLocationYOnMap() {
-		return locationYOnMap;
+		return YOnMap;
 	}
 
 	@Override
 	public void draw(Graphics g) {
 		g.setColor(Color.black);
-		g.drawRect(locationXOnMap-width/2, locationYOnMap-heidth/2, width, heidth);
+		
+		g.drawRect(XOnMap-width/2, YOnMap-heidth/2, width, heidth);
+		
+		if(isLabelView())
+		{
+			g.drawString("("+locationX+","+locationY+")", XOnMap-width/2, YOnMap-heidth/2);
+		}
 	}
 	
-	public boolean isEnter()
+	public boolean isEnter(Point point)
 	{
-		return false;
+		if(point.x>=XOnMap-width
+		 &&point.x<=XOnMap+width
+		 &&point.y>=YOnMap-heidth
+		 &&point.y<=YOnMap+heidth)
+		{
+			return true;
+		}
+		else
+		{
+			return false;	
+		}
+		
 	}
 
 }

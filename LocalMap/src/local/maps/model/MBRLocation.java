@@ -1,6 +1,7 @@
 package local.maps.model;
 
 import java.awt.Graphics;
+import java.awt.Point;
 
 import local.maps.LocalMap;
 
@@ -33,6 +34,18 @@ public class MBRLocation implements IFLocation{
 		g.drawLine(rightUp.getLocationXOnMap(), rightUp.getLocationYOnMap(), rightDown.getLocationXOnMap(), rightDown.getLocationYOnMap());
 		g.drawLine(rightDown.getLocationXOnMap(), rightDown.getLocationYOnMap(), leftDown.getLocationXOnMap(), leftDown.getLocationYOnMap());
 		g.drawLine(leftDown.getLocationXOnMap(), leftDown.getLocationYOnMap(), leftUp.getLocationXOnMap(), leftUp.getLocationYOnMap());
+	}
+	@Override
+	public void setLabelView(boolean isLabelView) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public boolean isEnter(Point mousePoint) {
+		
+		
+		
+		return false;
 	}
 	
 
