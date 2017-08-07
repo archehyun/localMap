@@ -1,5 +1,10 @@
 package local.maps;
 
+/**
+ * 맵 기본 정보를 설정
+ * @author archehyun
+ *
+ */
 public class MapConfig implements Runnable{
 	Thread thread;
 	LocalMap map;
@@ -14,8 +19,7 @@ public class MapConfig implements Runnable{
 		{
 			try {
 
-				map.update();
-				
+				map.update();				
 				map.repaint();
 
 				Thread.sleep(100);

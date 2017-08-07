@@ -13,8 +13,12 @@ import local.maps.model.IFLocation;
 import local.maps.model.Location;
 import local.maps.model.Marker;
 
+/**
+ * LocalMap √÷ªÛ¿ß ∏ 
+ * @author archehyun
+ *
+ */
 public abstract class LocalMap extends Component {
-	
 	
 	protected int startX;
 	
@@ -109,13 +113,14 @@ public abstract class LocalMap extends Component {
 	public void paint(Graphics g)
 	{
 		g.setColor(Color.white);
+		
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
+		
 		this.drawGird(g);
 
 		drawLocation(g);
 		
 		drawMarker(g);
-
 		
 	}
 	private void drawLocation(Graphics g) {
@@ -143,9 +148,11 @@ public abstract class LocalMap extends Component {
 	}
 	
 	public double getWRate() {
+		
 		return wGap*rate;
 	}
 	public double getHRate() {
+		
 		return hGap*rate;
 	}
 	protected void drawGird(Graphics g)
@@ -231,8 +238,6 @@ public abstract class LocalMap extends Component {
 		rate = dScale;
 		
 	}
-
-
 
 }
 

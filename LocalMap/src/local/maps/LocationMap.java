@@ -85,8 +85,11 @@ public class LocationMap extends LocalMap{
 	}
 	
 	private int leftEndX;
+	
 	private int rightEndX;
+	
 	private int upEndY;
+	
 	private int downEndY;
 	
 	public void update()
