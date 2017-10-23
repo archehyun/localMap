@@ -88,4 +88,16 @@ public class ChartMap extends LocalMap{
 		return (int) (startY-locationY*this.getHRate());
 	}
 
+	@Override
+	public void downScale() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void upScale() {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

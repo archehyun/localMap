@@ -20,6 +20,9 @@ import local.maps.model.Marker;
  */
 public abstract class LocalMap extends Component {
 	
+	
+	protected int step=1;
+	
 	protected int startX;
 	
 	protected int endX;
@@ -28,15 +31,18 @@ public abstract class LocalMap extends Component {
 	
 	protected int endY;
 	
-	private double MAX_RATE=100.0;
+	protected int MAX_STEP=28;
 	
-	private double MIN_RATE=0.001;
+	protected int MIN_STEP=1;
 	
 	private double majorScaleUnit=0.1;
 	
-	private double minorScaleUnit=0.01; 
+	private double minorScaleUnit=0.01;
 	
-	private double rate=1;
+	public abstract void downScale();
+	public abstract void upScale();
+	
+	protected double rate=1;
 
 
 	public double getRate() {
@@ -47,6 +53,11 @@ public abstract class LocalMap extends Component {
 
 	public void setMousePoint(Point mousePoint) {
 		this.mousePoint = mousePoint;
+	}
+	
+	public void setStep(int step)
+	{
+		this.step =step;
 	}
 
 	protected Point insect = new Point(10, 10);
@@ -74,7 +85,23 @@ public abstract class LocalMap extends Component {
 	protected int wGapCount;
 
 	protected int hGapCount;
-
+	protected void updateDrawList()
+	{
+		centerLocation.update(this);
+		
+		Iterator<IFLocation> iter = locationList.iterator();
+		
+		while(iter.hasNext())
+		{
+			iter.next().update(this);
+		}
+		Iterator<IFLocation> overayiter = overayList.iterator();
+		
+		while(overayiter.hasNext())
+		{
+			overayiter.next().update(this);
+		}
+	}
 	
 
 	/**
@@ -84,6 +111,8 @@ public abstract class LocalMap extends Component {
 	List<Marker> markerList = new LinkedList<Marker>();
 	
 	List<IFLocation> locationList = new LinkedList<IFLocation>();
+	
+	List<IFLocation> overayList = new LinkedList<IFLocation>();
 	
 	protected Location centerLocation;
 	
@@ -112,17 +141,31 @@ public abstract class LocalMap extends Component {
 
 	public void paint(Graphics g)
 	{
-		g.setColor(Color.white);
+		g.setColor(new Color(163,204,255));
 		
 		g.fillRect(0, 0, this.getWidth(), this.getHeight());
 		
 		this.drawGird(g);
 
+		drawOveray(g);
+		
 		drawLocation(g);
 		
 		drawMarker(g);
 		
 	}
+	
+	private void drawOveray(Graphics g) {
+		
+		Iterator<IFLocation> iter = overayList.iterator();
+		
+		while(iter.hasNext())
+		{
+			IFLocation marker = iter.next();
+			marker.draw(g);
+		}
+	}
+	
 	private void drawLocation(Graphics g) {
 		
 		Iterator<IFLocation> iter = locationList.iterator();
@@ -187,34 +230,24 @@ public abstract class LocalMap extends Component {
 		
 		mouseLocationY = (centerY-mousePoint.y)/this.getHRate()-centerLocation.getLocationY() ;
 		
-		centerLocation.update(this);
-		
-		Iterator<IFLocation> iter = locationList.iterator();
-		
-		while(iter.hasNext())
-		{
-			iter.next().update(this);
-		}
+		updateDrawList();
 	}
-	
+	public void addOveray(IFLocation overay)
+	{
+		this.overayList.add(overay);
+	}
 	public void addLocation(IFLocation location) {
 		
-		this.locationList.add(location);
+		this.locationList.add(location);		
+	}
+	
+	public void clear()
+	{
+		locationList.clear();
 		
+		markerList.clear();
 	}
-	public void upScale() {
-		if(rate<MAX_RATE)
-		{
-			rate+=majorScaleUnit;
-			System.out.println("up");
-		}
-	}
-	public void downScale() {
-		if(rate>MIN_RATE)
-		{
-			rate-=majorScaleUnit;
-		}
-	}
+
 	public Location getcenterLocation() {
 		// TODO Auto-generated method stub
 		return centerLocation;
@@ -225,6 +258,7 @@ public abstract class LocalMap extends Component {
 	}
 	
 	public abstract int getXOnMap(double locationX); 
+	
 	public abstract int getYOnMap(double locationY);
 	public int getStartX() {
 		// TODO Auto-generated method stub

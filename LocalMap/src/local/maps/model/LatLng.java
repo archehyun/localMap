@@ -11,6 +11,10 @@ public class LatLng implements IFLocation{
 	
 	private double longitude; // °æµµ
 	
+	private int XOnMap;
+	
+	private int YOnMap;
+	
 	public double getLatitude() {
 		return latitude;
 	}
@@ -35,7 +39,9 @@ public class LatLng implements IFLocation{
 
 	@Override
 	public void update(LocalMap map) {
-		// TODO Auto-generated method stub
+		XOnMap = map.getXOnMap(this.getLatitude());
+		
+		YOnMap = map.getYOnMap(this.getLongitude());
 		
 	}
 
